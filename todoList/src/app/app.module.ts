@@ -12,11 +12,15 @@ import {MatIconModule} from '@angular/material/icon';
 import { CoreModule } from './core/core.module';
 import { RouterModule } from '@angular/router';
 import { TaskComponent } from './task/task.component';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TaskComponent
+    TaskComponent,
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,

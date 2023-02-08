@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { APP_FILTER } from '@nestjs/core';
 //import { Courses } from './model/courses.entity';
 import { TodoModule } from './todo/todo.module';
+import { AuthorizationModule } from './authorization/authorization.module';
 
 
 @Module({
@@ -23,6 +24,7 @@ import { TodoModule } from './todo/todo.module';
       synchronize: false, // shouldn't be used in production - may lose data
     }),
     TodoModule,
+    AuthorizationModule,
   ],
   controllers: [AppController],
   providers: [AppService],
