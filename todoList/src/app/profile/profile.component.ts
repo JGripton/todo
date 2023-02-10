@@ -1,10 +1,20 @@
-import { Component } from '@angular/core';
+// src/app/pages/profile/profile.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '@auth0/auth0-angular';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
+  profileJson: string = null!; // = Non-null assertion
 
+  constructor(public auth: AuthService) {}
+
+  ngOnInit(): void {
+    this.auth.user$.subscribe(
+      (profile) => (this.profileJson = JSON.stringify(profile, null, 2))
+    );
+  }
 }

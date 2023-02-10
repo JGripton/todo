@@ -14,13 +14,27 @@ import { RouterModule } from '@angular/router';
 import { TaskComponent } from './task/task.component';
 import { LoginComponent } from './login/login.component';
 import { ProfileComponent } from './profile/profile.component';
+import { LoginButtonComponent } from './components/login-button/login-button.component';
+import { SignupButtonComponent } from './components/signup-button/signup-button.component';
+import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
+import { AuthenticationButtonComponent } from './components/authentication-button/authentication-button.component';
+import { AuthNavComponent } from './components/auth-nav/auth-nav.component';
+import { NavBarComponent } from './components/nav-bar/nav-bar.component';
+import { MainNavComponent } from './components/main-nav/main-nav.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TaskComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginButtonComponent,
+    SignupButtonComponent,
+    LogoutButtonComponent,
+    AuthenticationButtonComponent,
+    AuthNavComponent,
+    NavBarComponent,
+    MainNavComponent
   ],
   imports: [
     BrowserModule,

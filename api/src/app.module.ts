@@ -21,7 +21,7 @@ import { AuthorizationModule } from './authorization/authorization.module';
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
       autoLoadEntities: true,
-      synchronize: false, // shouldn't be used in production - may lose data
+      synchronize: false, 
     }),
     TodoModule,
     AuthorizationModule,
