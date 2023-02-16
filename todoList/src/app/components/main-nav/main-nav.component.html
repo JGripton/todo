@@ -1,3 +1,4 @@
+
 <p>
     <mat-toolbar color="primary">
       <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
@@ -5,9 +6,10 @@
             <mat-icon>menu</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <a routerLink="/signin" ><button mat-menu-item>Sign-in</button></a>
+            <app-login-button *ngIf="(auth.isAuthenticated$ | async) === false"></app-login-button>
             <a routerLink="/profile" ><button mat-menu-item>Profile</button></a>
-            <a routerLink="/signout" ><button mat-menu-item>Sign-out</button></a>
+            <a routerLink="/task" ><button mat-menu-item>Task Page</button></a>
+            <app-logout-button *ngIf="(auth.isAuthenticated$ | async)"></app-logout-button>
           </mat-menu>
       </button>
       <span>My App</span>

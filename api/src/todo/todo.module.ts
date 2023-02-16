@@ -1,9 +1,14 @@
 import { Module } from '@nestjs/common';
-import { TasksController } from './tasks/tasks.controller';
-import { TaskService } from './task/task.service';
+import { TaskController } from './task.controller';
+import { TaskService } from './task.service';
+import { UserService } from './user.service';
+import { UserController } from './user.controller';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Task, User } from 'src/typeorm';
 
 @Module({
-  controllers: [TasksController],
-  providers: [TaskService]
+  controllers: [TaskController, TaskController, UserController],
+  providers: [TaskService, UserService],
+  imports: [TypeOrmModule.forFeature([User,Task]),],
 })
 export class TodoModule {}

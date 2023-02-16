@@ -1,16 +1,13 @@
-<p>
-    <mat-toolbar color="primary">
-      <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
-        <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-            <mat-icon>menu</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item>Profile</button>
-            <button mat-menu-item>Settings</button>
-            <button mat-menu-item>Sign-out</button>
-          </mat-menu>
-      </button>
-      <span>My App</span>
-      <span class="example-spacer">        </span>
-    </mat-toolbar>
-  </p>
+
+<div class="container">
+  <div class="form-area">
+    <h3>Add new task</h3>
+    <form #tasksForm="ngForm" (ngSubmit)="createTask(tasksForm.value)">
+      <input type="text" name="description"  ngModel>
+      
+      <input type="submit" value ="Add task">
+    </form>
+    <button (click)="getTasks()">Get tasks</button>
+  </div>
+
+</div>

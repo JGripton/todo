@@ -7,6 +7,7 @@ import { APP_FILTER } from '@nestjs/core';
 //import { Courses } from './model/courses.entity';
 import { TodoModule } from './todo/todo.module';
 import { AuthorizationModule } from './authorization/authorization.module';
+import entities from './typeorm';
 
 
 @Module({
@@ -20,8 +21,9 @@ import { AuthorizationModule } from './authorization/authorization.module';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
+      entities: entities,
       autoLoadEntities: true,
-      synchronize: false, 
+      synchronize: true, 
     }),
     TodoModule,
     AuthorizationModule,

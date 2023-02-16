@@ -13,7 +13,7 @@ import { CoreModule } from './core/core.module';
 import { RouterModule } from '@angular/router';
 import { TaskComponent } from './task/task.component';
 import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { ProfileComponent } from './components/profile/profile.component';
 import { LoginButtonComponent } from './components/login-button/login-button.component';
 import { SignupButtonComponent } from './components/signup-button/signup-button.component';
 import { LogoutButtonComponent } from './components/logout-button/logout-button.component';
@@ -21,6 +21,14 @@ import { AuthenticationButtonComponent } from './components/authentication-butto
 import { AuthNavComponent } from './components/auth-nav/auth-nav.component';
 import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
+import { AuthModule } from '@auth0/auth0-angular';
+import { environment as env } from 'src/environments/environment';
+import { LoadingComponent } from './components/loading/loading.component';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthHttpInterceptor } from '@auth0/auth0-angular';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -34,7 +42,8 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
     AuthenticationButtonComponent,
     AuthNavComponent,
     NavBarComponent,
-    MainNavComponent
+    MainNavComponent,
+    LoadingComponent,      
   ],
   imports: [
     BrowserModule,
@@ -46,11 +55,33 @@ import { MainNavComponent } from './components/main-nav/main-nav.component';
     MatIconModule,
     CoreModule,
     RouterModule,
+    FormsModule,
+    HttpClientModule,
+    AuthModule.forRoot({
+      domain: 'dev-hrvjkf4e5d0e5cy8.us.auth0.com',
+      clientId: 'oq4FEFctXYPhffhGh4VbMD7qif0DuptN',
+      authorizationParams: {
+        redirect_uri: window.location.origin
+      },
+      httpInterceptor: {
+        allowedList: [`${env.dev.serverUrl}/api/task/create`],
+      },
+    },
+    
+    ),
     RouterModule.forRoot([
       {path: 'task', component: TaskComponent},
     ]),
+    RouterModule.forRoot([
+      {path: 'profile', component: ProfileComponent},
+    ]),
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthHttpInterceptor,
+    multi: true,
+    },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
