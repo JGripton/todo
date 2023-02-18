@@ -23,6 +23,15 @@ export class CreateTaskDto {
     auth0_id: string;
   }
 
+  export class UpdateTaskStatusDto {
+    @IsNotEmpty()
+    id: number;
+
+    @IsNotEmpty()
+    @MinLength(8)
+    auth0_id: string;
+  }
+
   export class DeleteTaskDto {
     @IsNotEmpty()
     id: number;

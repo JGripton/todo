@@ -1,13 +1,55 @@
 
-<div class="container">
+<div class="container" *ngIf="auth.isAuthenticated$ | async">
   <div class="form-area">
     <h3>Add new task</h3>
-    <form #tasksForm="ngForm" (ngSubmit)="createTask(tasksForm.value)">
+    <form #tasksForm="ngForm" (ngSubmit)="createTask(tasksForm.value)" >
       <input type="text" name="description"  ngModel>
-      
       <input type="submit" value ="Add task">
+      
     </form>
-    <button (click)="getTasks()">Get tasks</button>
   </div>
+ 
 
 </div>
+<button (click)="getTasks()">Load tasks</button>
+<table mat-table class="mat-elevation-z8 demo-table">
+  <!-- Description Column -->
+  <ng-container matColumnDef="Description">
+    <th mat-header-cell *matHeaderCellDef>Description</th>
+    <td mat-cell>
+      <mat-list #tasks>
+        <mat-list-item *ngFor="let description of taskList" >
+            {{description}}
+        </mat-list-item>
+      </mat-list></td>
+  </ng-container>
+  <!-- Is Completed Column -->
+  <ng-container matColumnDef="Is Completed?">
+    <th mat-header-cell *matHeaderCellDef>Is completed?</th>
+    <td mat-cell>
+      <mat-list #tasks2>
+        <mat-list-item *ngFor="let status of taskCompleted; let i=index" >
+            <mat-checkbox name="completed" [ngModel]=status  class="form-check-input" (change)="updateStatus(status, i)"></mat-checkbox>
+      </mat-list-item>
+      </mat-list>
+    </td>  
+  </ng-container>
+  <!-- Delete button Column -->
+  <ng-container matColumnDef="Is Completed?">
+    <th mat-header-cell *matHeaderCellDef>Delete</th>
+    <td mat-cell>
+      <mat-list #tasks2>
+        <mat-list-item *ngFor="let id of taskIDs" >
+          <button (click)="deleteThenUpdate(id)"><mat-icon>delete</mat-icon></button>
+        </mat-list-item>
+      </mat-list>
+    </td>  
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr
+      mat-row
+      *matRowDef="let row; columns: displayedColumns;"
+  ></tr>
+
+</table>
+

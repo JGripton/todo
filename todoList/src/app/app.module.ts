@@ -29,6 +29,8 @@ import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
+import { MatListModule } from '@angular/material/list';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -57,6 +59,8 @@ import { HttpClientModule } from '@angular/common/http';
     RouterModule,
     FormsModule,
     HttpClientModule,
+    MatListModule,
+    MatCheckboxModule,
     AuthModule.forRoot({
       domain: 'dev-hrvjkf4e5d0e5cy8.us.auth0.com',
       clientId: 'oq4FEFctXYPhffhGh4VbMD7qif0DuptN',

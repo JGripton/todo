@@ -1,7 +1,7 @@
 import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { AuthorizationGuard } from 'src/authorization/authorization.guard';
-import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto } from 'src/typeorm/dto/tasks.dtos';
+import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from 'src/typeorm/dto/tasks.dtos';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
 
@@ -38,6 +38,12 @@ export class TaskController {
             updateTask(@Body() updateTaskDto: UpdateTaskDto) {
                 return this.taskService.updateTask(updateTaskDto, updateTaskDto.id, updateTaskDto.auth0_id);
             }
+
+        @Post('updateStatus') //updates task if task is created by current user
+        @UsePipes(ValidationPipe)
+            completeTask(@Body() updateTaskStatusDto: UpdateTaskStatusDto) {
+                return this.taskService.updateTaskStatus(updateTaskStatusDto, updateTaskStatusDto.id, updateTaskStatusDto.auth0_id);
+            }    
 
         @Post('delete') //deletes task if task is created by current user
         @UsePipes(ValidationPipe)
