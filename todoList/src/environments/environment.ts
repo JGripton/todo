@@ -12,4 +12,5 @@ export const environment = {
   dev: {
     serverUrl: 'http://localhost:4200',
   },
+  key: 'AIzaSyD49Zpj3c3xlINlrvchET-4G7nyh-4C5RY',
 };

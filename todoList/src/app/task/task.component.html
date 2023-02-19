@@ -7,6 +7,13 @@
       <input type="submit" value ="Add task">
       
     </form>
+      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+        <mat-button-toggle value="en" (click)="onlanguageChange('en')">English</mat-button-toggle>
+        <mat-button-toggle value="es" (click)="onlanguageChange('es')">Spanish</mat-button-toggle>
+        <mat-button-toggle value="ru" (click)="onlanguageChange('ru')">Russian</mat-button-toggle>
+      </mat-button-toggle-group>
+
+
   </div>
  
 

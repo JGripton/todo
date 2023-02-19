@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,9 +27,16 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthHttpInterceptor } from '@auth0/auth0-angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClient } from '@angular/common/http';
 import { MatListModule } from '@angular/material/list';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {MatButtonToggleModule} from '@angular/material/button-toggle';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -61,6 +67,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     HttpClientModule,
     MatListModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
+    TranslateModule.forRoot(),
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+          useFactory: HttpLoaderFactory,
+          deps: [HttpClient]
+      }
+    }),
     AuthModule.forRoot({
       domain: 'dev-hrvjkf4e5d0e5cy8.us.auth0.com',
       clientId: 'oq4FEFctXYPhffhGh4VbMD7qif0DuptN',
@@ -71,7 +86,6 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
         allowedList: [`${env.dev.serverUrl}/api/task/create`],
       },
     },
-    
     ),
     RouterModule.forRoot([
       {path: 'task', component: TaskComponent},
@@ -79,6 +93,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     RouterModule.forRoot([
       {path: 'profile', component: ProfileComponent},
     ]),
+    
+    
   ],
   providers: [ {
     provide: HTTP_INTERCEPTORS,
