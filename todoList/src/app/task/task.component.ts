@@ -13,11 +13,6 @@ interface Task {
   is_completed: boolean;
   auth0_id: string;
 }
-interface Translation {
-  translatedText: string;
-  detectedSourceLanguage: string;
-
-}
 
 @Component({
   selector: 'app-task',
@@ -47,7 +42,7 @@ export class TaskComponent implements OnInit{
       task.auth0_id = JSON.parse(this.profileJson)["sub"]; //gets current users sub to send as auth0_id
       task.description = task.description.replaceAll('"', "")
       task.description = task.description.replaceAll("'", "") //Removes quotes from description so that string split can be used on translation result
-      this.http.post(`http://localhost:3000/api/task/create`, task) //Creates task
+      this.http.post(env.dev.APIserverUrl+'/api/task/create', task) //Creates task
       .subscribe((result) => {
         console.log(result);
       });
@@ -61,7 +56,7 @@ export class TaskComponent implements OnInit{
     this.taskCompleted = []
     this.taskIDs = []
     var auth0_id = JSON.parse(this.profileJson)["sub"];
-    this.http.get('http://localhost:3000/api/task/'+auth0_id)
+    this.http.get(env.dev.APIserverUrl+'/api/task/'+auth0_id)
     .subscribe((result) => {
       console.log(result)
       const json = JSON.stringify(result, null, 4);
@@ -76,7 +71,7 @@ export class TaskComponent implements OnInit{
 
   deleteTask(id: number): void {
     const task = {id: id, auth0_id: JSON.parse(this.profileJson)["sub"]}
-    this.http.post(`http://localhost:3000/api/task/delete`, task)
+    this.http.post(env.dev.APIserverUrl+'/api/task/delete', task)
     .subscribe((result) => {
       console.log(result);
     });
@@ -84,32 +79,32 @@ export class TaskComponent implements OnInit{
   deleteThenUpdate(id: number): void { //calls deleteTask API then manually updates table to avoid calling getTasks()
     this.deleteTask(id);
     let index = this.taskIDs.indexOf(id);
-    this.taskList.splice(index, 1);
+    this.taskList.splice(index, 1); //Removes specified task from array
     this.taskCompleted.splice(index, 1);
     this.taskIDs.splice(index, 1);
   }
 
-  updateStatus(e: any, index: number): void {
+  updateStatus(e: any, index: number): void { //Mark task as completed or incomplete
     const task = {id: this.taskIDs[index], auth0_id: JSON.parse(this.profileJson)["sub"], is_completed: true}
     if(e == false){
-      task.is_completed = true; //Changes state
+      task.is_completed = true; //Changes to opposite state
     }
     else {
       task.is_completed = false;
     }
-    this.http.post(`http://localhost:3000/api/task/updateStatus`, task)
+    this.http.post(env.dev.APIserverUrl+'/api/task/updateStatus', task) //Sends updated state to DB
     .subscribe((result) => {
       console.log(result);
     });
   }
 
-  onlanguageChange(lang: string){
+  onlanguageChange(lang: string){ //Function to translate task description with google API
     for (let i = 0; i < this.taskList.length; i++){
       this.http.post('https://translation.googleapis.com/language/translate/v2?key='+env.key+'&target='+lang+'&q='+this.taskList[i], '')
       .subscribe((result) => {
         console.log(result);
         const json = JSON.stringify(result, null, 4);
-        console.log(json.split('"', 8)[7])
+        console.log(json.split('"', 8)[7]) //Extracts translated text from json (wasnt working with interface)
         this.taskList[i] = json.split('"', 8)[7];
       });
       }
