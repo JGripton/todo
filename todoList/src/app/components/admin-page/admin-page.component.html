@@ -1,0 +1,63 @@
+<div>
+  <table mat-table class="mat-elevation-z8 demo-table">
+    <!-- Nickname Column -->
+    <ng-container matColumnDef="Nickname">
+      <th mat-header-cell *matHeaderCellDef>Nickname</th>
+      <td mat-cell>
+        <mat-list #tasks>
+          <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index" >
+              <label (click)="getTasks(i)">{{nickname}}</label>
+          </mat-list-item>
+        </mat-list></td>
+    </ng-container>
+    <!-- Has Translated Column -->
+    <ng-container matColumnDef="Has Translate?">
+      <th mat-header-cell *matHeaderCellDef>Is completed?</th>
+      <td mat-cell>
+        <mat-list #tasks2>
+          <mat-list-item *ngFor="let status of userTranslationStatusList; let i=index" >
+            Has Translated?<mat-checkbox name="translated" [ngModel]=status  class="form-check-input" ></mat-checkbox>
+        </mat-list-item>
+        </mat-list>
+      </td>  
+    </ng-container>
+    <!-- View users tasks Column -->
+    <ng-container matColumnDef="Load tasks">
+      <th mat-header-cell *matHeaderCellDef>Nickname</th>
+      <td mat-cell>
+        <mat-list #tasks>
+          <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index" >
+              <button mat-fab extended color="primary" (click)="getTasks(i)">
+                <mat-icon>menu</mat-icon>
+                View Tasks
+              </button>
+          </mat-list-item>
+        </mat-list></td>
+    </ng-container>
+  </table>
+</div>
+<div>
+    <table mat-table class="mat-elevation-z8 demo-table">
+        <!-- Description Column -->
+        <ng-container matColumnDef="Description">
+          <th mat-header-cell *matHeaderCellDef>Description</th>
+          <td mat-cell>
+            <mat-list #tasks>
+              <mat-list-item *ngFor="let description of taskDescription" >
+                  {{description}}
+              </mat-list-item>
+            </mat-list></td>
+        </ng-container>
+        <!-- Is Completed Column -->
+        <ng-container matColumnDef="Is Completed?">
+          <th mat-header-cell *matHeaderCellDef>Is completed?</th>
+          <td mat-cell>
+            <mat-list #tasks2>
+              <mat-list-item *ngFor="let status of taskCompleted; let i=index" >
+                  Completed?<mat-checkbox name="completed" [ngModel]=status  class="form-check-input" ></mat-checkbox>
+            </mat-list-item>
+            </mat-list>
+          </td>  
+        </ng-container>
+      </table>
+</div>

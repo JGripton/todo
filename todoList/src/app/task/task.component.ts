@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment as env } from 'src/environments/environment';
-import { AuthService } from '@auth0/auth0-angular';
+import { AuthService, User } from '@auth0/auth0-angular';
 import {MatListModule} from '@angular/material/list';
 import { waitForAsync } from '@angular/core/testing';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
@@ -29,11 +29,17 @@ export class TaskComponent implements OnInit{
   displayedColumns: string[] = ['Description', 'Complete?', 'Delete'];
   ngOnInit(): void {
     this.auth.user$.subscribe(
-      (profile) => (this.profileJson = JSON.stringify(profile, null, 2)),
+      (profile) => (this.profileJson = JSON.stringify(profile, null, 2)), //gets user information and stores it in profileJson
        
     )
     this.auth.user$.subscribe(
       (profile) => (this.getTasks()), //Calls getTasks function once user data is loaded
+       
+    )
+
+    this.auth.user$.subscribe(
+      //TODO: Only call method if taskList empty | User with tasks must already be initialised
+      (profile) => (this.createUser()), //Adds user to database if new user
        
     )
   }
@@ -48,10 +54,16 @@ export class TaskComponent implements OnInit{
       });
       setTimeout(() => this.getTasks(), 250) //waits 250ms to ensure database has updated then reloads tasks list
     }
+  createUser(): void {
+    const user = {auth0_id: JSON.parse(this.profileJson)["sub"], nickname: JSON.parse(this.profileJson)["nickname"]}
+    this.http.post(env.dev.APIserverUrl+'/api/user/create', user) //Creates task
+      .subscribe((result) => {
+        console.log(result);
+      });
+  }
     
 
   getTasks(): void {
-    console.log(this.profileJson)
     this.taskList = [] //Clears arrays so updated data can be pushed
     this.taskCompleted = []
     this.taskIDs = []
@@ -99,6 +111,11 @@ export class TaskComponent implements OnInit{
   }
 
   onlanguageChange(lang: string){ //Function to translate task description with google API
+    const user = {auth0_id: JSON.parse(this.profileJson)["sub"], has_translated: true}
+    this.http.post(env.dev.APIserverUrl+'/api/user/updateTranslationStatus', user)
+      .subscribe((result) => {
+        console.log(result);
+      });
     for (let i = 0; i < this.taskList.length; i++){
       this.http.post('https://translation.googleapis.com/language/translate/v2?key='+env.key+'&target='+lang+'&q='+this.taskList[i], '')
       .subscribe((result) => {

@@ -22,4 +22,18 @@ export class User {
   })
   nickname: string;
 
+  @Column({
+    name: 'has_translated',
+    nullable: false,
+    default: false,
+  })
+  has_translated: boolean;
+
+  @Column({
+    name: 'is_admin',
+    nullable: false,
+    default: false,
+  })
+  is_admin: boolean;
+
 }

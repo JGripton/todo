@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectDataSource, InjectRepository } from '@nestjs/typeorm';
-import { Task } from 'src/typeorm';
-import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from 'src/typeorm/dto/tasks.dtos';
+import { Task } from '../typeorm';
+import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from '../typeorm/dto/tasks.dtos';
 import { Repository, DataSource } from 'typeorm';
 import { TaskModel } from './task.model';
+import { UserService } from './user.service';
+import { CreateUserDto } from '../typeorm/dto/users.dtos';
 
 @Injectable()
 export class TaskService {
     constructor(
-        @InjectRepository(Task) private readonly taskRepository: Repository<Task>,
+        @InjectRepository(Task) private readonly taskRepository: Repository<Task>, 
+        private readonly userService: UserService
       ) {}
 
 
@@ -17,12 +20,13 @@ export class TaskService {
         {id: 2, user_id: "1", description: "7"},
     ]
 
-    createTask(createTaskDto: CreateTaskDto) {
+     createTask(createTaskDto: CreateTaskDto) {
         const newTask = this.taskRepository.create(createTaskDto);
         return this.taskRepository.save(newTask);
       }
 
-    findAllTasksByUserID(auth0_id: string){
+    async findAllTasksByUserID(auth0_id: string){
+       
         return this.taskRepository.find({where: {auth0_id: auth0_id}});
     }
 

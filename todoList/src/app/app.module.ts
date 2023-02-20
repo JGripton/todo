@@ -33,6 +33,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MatButtonToggleModule} from '@angular/material/button-toggle';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -51,7 +52,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AuthNavComponent,
     NavBarComponent,
     MainNavComponent,
-    LoadingComponent,      
+    LoadingComponent,
+    AdminPageComponent,      
   ],
   imports: [
     BrowserModule,
@@ -92,6 +94,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ]),
     RouterModule.forRoot([
       {path: 'profile', component: ProfileComponent},
+    ]),
+    RouterModule.forRoot([
+      {path: 'admin', component: AdminPageComponent},
     ]),
     
     

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@auth0/auth0-angular';
+import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TaskComponent } from './task/task.component';
 
@@ -12,6 +13,11 @@ const routes: Routes = [
     component: ProfileComponent,
     canActivate: [AuthGuard],
   },
+  {
+    path: '/admin',
+    component: AdminPageComponent,
+    canActivate: [AuthGuard],
+  }
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, NotFoundException, Param, ParseIntPipe, Post, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TaskService } from './task.service';
 import { AuthorizationGuard } from 'src/authorization/authorization.guard';
-import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from 'src/typeorm/dto/tasks.dtos';
+import { CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto } from '../typeorm/dto/tasks.dtos';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from 'src/app.module';
 
@@ -18,7 +18,7 @@ export class TaskController {
 
         @Post('create')
         @UsePipes(ValidationPipe)
-            createUsers(@Body() createTaskDto: CreateTaskDto) {
+            createTask(@Body() createTaskDto: CreateTaskDto) {
                 return this.taskService.createTask(createTaskDto);
             }
         

@@ -1,7 +1,7 @@
 import { Body, Controller, Get, Param, ParseIntPipe, Post, UsePipes, ValidationPipe, } from '@nestjs/common';
-import { CreateUserDto } from 'src/typeorm/dto/users.dtos';
+import { CreateUserDto, UpdateUserTranslationStatusDto } from '../typeorm/dto/users.dtos';
 import { UserService } from './user.service';
-import { AuthorizationGuard } from 'src/authorization/authorization.guard';
+import { AuthorizationGuard } from '../authorization/authorization.guard';
 
 @Controller('user')
 export class UserController {
@@ -12,5 +12,17 @@ export class UserController {
     @UsePipes(ValidationPipe)
     createUsers(@Body() createUserDto: CreateUserDto) {
         return this.userService.createUser(createUserDto);
+    }
+
+    @Get(':userID')
+    getTasksByUserID(@Param('userID')user_id: string){
+        let users = this.userService.findAllUsers(user_id)
+        return users;
+    }
+
+    @Post('updateTranslationStatus')
+    @UsePipes(ValidationPipe)
+    updateTranslationStatus(@Body() updateTranslationStatusDto: UpdateUserTranslationStatusDto) {
+        return this.userService.updateTranslationStatus(updateTranslationStatusDto);
     }
 }
