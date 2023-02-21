@@ -1,0 +1,18 @@
+
+version: "3"
+services:
+
+  nestjs-api:
+    image: todo
+    env_file:
+      - .env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+    networks:
+      - postgres
+ 
+networks:
+  postgres:
+    driver: bridge

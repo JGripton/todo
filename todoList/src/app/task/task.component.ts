@@ -5,7 +5,6 @@ import { AuthService, User } from '@auth0/auth0-angular';
 import {MatListModule} from '@angular/material/list';
 import { waitForAsync } from '@angular/core/testing';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
-import { Header } from '@nestjs/common';
 
 interface Task {
   id: number;

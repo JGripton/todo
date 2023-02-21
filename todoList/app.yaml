@@ -1,0 +1,14 @@
+runtime: nodejs18
+
+instance_class: F2
+
+env_variables: 
+  BUCKET_NAME: "todo-front-v2.appspot.com"
+
+handlers:
+- url: /
+  static_files: dist/todo-list/index.html
+  upload: dist/todo-list/index.html
+
+- url: /
+  static_dir: dist/todo-list
