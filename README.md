@@ -3,16 +3,22 @@
  
  # Running backend
  First, configure .env to connect to your database
+ 
  ```cd api```
+ 
  Install dependencies 
+ 
   ```npm install```
   Run
    ```npm run start```
 Backend service should now be running at http://localhost:3000/
 
 # Running frontend
- ``` cd todoList ```
+
+   ``` cd todoList ```
+ 
  Install dependencies 
+ 
   ``` npm install ```
   Run
    ``` npm run start ```
