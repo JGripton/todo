@@ -1,6 +1,8 @@
 # todo
  Simple To-Do list application with auth and language translation
  
+ Currently running on google cloud at https://todo-front-v2.uc.r.appspot.com/
+ 
  # Running backend
  First, configure .env to connect to your database, then cd into api foder
  
