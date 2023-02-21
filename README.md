@@ -32,7 +32,10 @@ Open todoList folder
    
    Frontend should now be running at http://localhost:4200/
    
-   #Creating a database on Google Cloud
+   
+   
+   
+   # Creating a database on Google Cloud
    
    First, sign up for google cloud and enable billing on your account. This will be required for deployment too.
    
