@@ -3,6 +3,8 @@
  
  Currently running on google cloud at https://todo-front-v2.uc.r.appspot.com/
  
+ Backend not currently live
+ 
  # Running backend
  First, configure .env to connect to your database, then cd into api foder
  
