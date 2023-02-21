@@ -1,9 +1,9 @@
 # todo
  Simple To-Do list application with auth and language translation
  
- Currently running on google cloud at https://todo-front-v2.uc.r.appspot.com/task
+ Currently running on google cloud at https://todo-front-v2.uc.r.appspot.com
  
- Sign in using the menu before trying to add a task
+ Home page is currently empty. Use the menu to sign in and then open the task page
  
  Backend not currently live
  
