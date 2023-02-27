@@ -8,19 +8,19 @@ export class UserController {
     constructor (private readonly userService: UserService){}
 
 
-    @Post('create')
+    @Post('create') //Adds user to database
     @UsePipes(ValidationPipe)
     createUsers(@Body() createUserDto: CreateUserDto) {
         return this.userService.createUser(createUserDto);
     }
 
-    @Get(':userID')
+    @Get(':userID') 
     getTasksByUserID(@Param('userID')user_id: string){
         let users = this.userService.findAllUsers(user_id)
         return users;
     }
 
-    @Post('updateTranslationStatus')
+    @Post('updateTranslationStatus') //Updates database to log that user has used the translation button
     @UsePipes(ValidationPipe)
     updateTranslationStatus(@Body() updateTranslationStatusDto: UpdateUserTranslationStatusDto) {
         return this.userService.updateTranslationStatus(updateTranslationStatusDto);

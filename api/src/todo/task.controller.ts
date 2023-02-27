@@ -16,14 +16,14 @@ export class TaskController {
             
         }
 
-        @Post('create')
+        @Post('create') //Adds task to database
         @UsePipes(ValidationPipe)
             createTask(@Body() createTaskDto: CreateTaskDto) {
                 return this.taskService.createTask(createTaskDto);
             }
         
         
-        @Get(':userID')
+        @Get(':userID') //Finds all tasks belonging to a user
         getTasksByUserID(@Param('userID')user_id: string){
             let task = this.taskService.findAllTasksByUserID(user_id);
             
@@ -33,14 +33,14 @@ export class TaskController {
             return task;
         }
 
-        @Post('update') //updates task if task is created by current user
+        @Post('update') //updates task description if task is created by current user
         @UsePipes(ValidationPipe)
             updateTask(@Body() updateTaskDto: UpdateTaskDto) {
                 return this.taskService.updateTask(updateTaskDto, updateTaskDto.id, updateTaskDto.auth0_id);
             }
 
-        @Post('updateStatus') //updates task if task is created by current user
-        @UsePipes(ValidationPipe)
+        @Post('updateStatus') //updates task is_complete status if task is created by current user
+        @UsePipes(ValidationPipe) 
             completeTask(@Body() updateTaskStatusDto: UpdateTaskStatusDto) {
                 return this.taskService.updateTaskStatus(updateTaskStatusDto, updateTaskStatusDto.id, updateTaskStatusDto.auth0_id);
             }    
