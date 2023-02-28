@@ -5,6 +5,7 @@ import { AuthService, User } from '@auth0/auth0-angular';
 import {MatListModule} from '@angular/material/list';
 import { waitForAsync } from '@angular/core/testing';
 import {TranslateModule, TranslateLoader, TranslateService} from '@ngx-translate/core';
+import {MatTableModule} from '@angular/material/table';
 
 interface Task {
   id: number;
@@ -25,7 +26,7 @@ export class TaskComponent implements OnInit{
   taskList: string[] = [];//Initialise arrays to store task information
   taskCompleted: boolean[] = [];
   taskIDs: number[] = [];
-  displayedColumns: string[] = ['Description', 'Complete?', 'Delete'];
+  displayedColumns: string[] = ['Description', 'Is Completed?', 'Delete'];
   ngOnInit(): void {
     this.auth.user$.subscribe(
       (profile) => (this.profileJson = JSON.stringify(profile, null, 2)), //gets user information and stores it in profileJson

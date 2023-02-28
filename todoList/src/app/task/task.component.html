@@ -19,30 +19,37 @@
 
 </div>
 <button (click)="getTasks()">Load tasks</button>
+
 <table mat-table class="mat-elevation-z8 demo-table">
+  <tr mat-header-row>
+    <th mat-header-cell>Description</th>
+    <th mat-header-cell>Is completed?</th>
+    <th mat-header-cell>Delete</th>
+  </tr>
   <!-- Description Column -->
   <ng-container matColumnDef="Description">
     <th mat-header-cell *matHeaderCellDef>Description</th>
-    <td mat-cell>
+    <td mat-cell class="border-right">
       <mat-list #tasks>
         <mat-list-item *ngFor="let description of taskList" >
             {{description}}
         </mat-list-item>
-      </mat-list></td>
+      </mat-list>
+    </td>
   </ng-container>
   <!-- Is Completed Column -->
   <ng-container matColumnDef="Is Completed?">
     <th mat-header-cell *matHeaderCellDef>Is completed?</th>
-    <td mat-cell>
+    <td mat-cell class="border-right">
       <mat-list #tasks2>
         <mat-list-item *ngFor="let status of taskCompleted; let i=index" >
             <mat-checkbox name="completed" [ngModel]=status  class="form-check-input" (change)="updateStatus(status, i)"></mat-checkbox>
-      </mat-list-item>
+        </mat-list-item>
       </mat-list>
-    </td>  
+    </td>
   </ng-container>
   <!-- Delete button Column -->
-  <ng-container matColumnDef="Is Completed?">
+  <ng-container matColumnDef="Delete">
     <th mat-header-cell *matHeaderCellDef>Delete</th>
     <td mat-cell>
       <mat-list #tasks2>
@@ -52,11 +59,27 @@
       </mat-list>
     </td>  
   </ng-container>
-  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr
-      mat-row
-      *matRowDef="let row; columns: displayedColumns;"
-  ></tr>
-
+  <tr mat-row *matRowDef="let task; columns: ['Description', 'Completed', 'Delete']" class="row-color" [class.grey-background]="task.id % 2 == 0"></tr>
 </table>
+
+<style>
+  td.border-right {
+    border-right: 1px solid #ccc;
+  }
+  .mat-row:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  .mat-row:nth-child(odd) {
+    background-color: #616060;
+  }
+  .mat-header-cell {
+  text-align: left;
+  }
+</style>
+
+
+
+
+
 
