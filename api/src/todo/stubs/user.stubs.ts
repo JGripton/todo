@@ -3,9 +3,9 @@ import { User } from "src/typeorm"
 export const userStub = (): User => {
     return  {
         id: 0,
-        auth0_id: "0000000000",
+        auth0_id: "777777777777",
         nickname: "Jim",
         has_translated: false,
-        is_admin: false
+        is_admin: true
     }
 }

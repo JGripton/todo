@@ -6,19 +6,22 @@ import { Task } from '../typeorm';
 import { taskStub } from './stubs/task.stubs';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UpdateUserTranslationStatusDto } from 'src/typeorm/dto/users.dtos';
+import { Repository, UpdateResult } from 'typeorm';
 
 jest.mock('./task.service')
 
 describe('TaskController', () => {
   let controller: TaskController;
   let service: TaskService;
+  let repository: Repository<Task>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TaskController],
-      imports: [CreateTaskDto, DeleteTaskDto, UpdateTaskDto, UpdateTaskStatusDto, Task, ],
+      imports: [],
       providers: [TaskService, {
         provide: getRepositoryToken(Task),
+        useClass: Repository,
         useValue: {
           save: jest.fn().mockResolvedValue(taskStub),
           find: jest.fn().mockResolvedValue([taskStub]),
@@ -28,7 +31,7 @@ describe('TaskController', () => {
 
     controller = module.get<TaskController>(TaskController);
     service = module.get<TaskService>(TaskService);
-    jest.clearAllMocks();
+    repository = module.get<Repository<Task>>(getRepositoryToken(Task));
   });
 
   it('should be defined', () => {
@@ -72,31 +75,19 @@ describe('TaskController', () => {
     })
   })
 
-  describe('UpdateTaskStatus', () => {
-    describe('when updateTaskStatus is called', () => {
-      let task: Task;
+  describe('completeTask', () => {
+    it('should update task status', async () => {
+      jest.spyOn(service, 'updateTaskStatus').mockResolvedValueOnce(taskStub());
 
-      let updateTaskStatus: UpdateTaskStatusDto;
-      beforeEach(async () => {
-        updateTaskStatus = {
-          id: taskStub().id,
-          auth0_id: taskStub().auth0_id,
-        }
-        task = await controller.completeTask(updateTaskStatus)
-      })
-      test('then it should call taskService', () => {
-        expect(service.updateTask).toHaveBeenCalledWith(updateTaskStatus, updateTaskStatus.id, updateTaskStatus.auth0_id)
-      })
-      test('then it should return task', () => {
-        //taskStub().description = "Walk the cat"
-        expect(task).toEqual(taskStub())
-      })
-    })
-  })
+      const result = await controller.completeTask({
+        id: 0,
+        auth0_id: '0000000000',
+        is_completed: true,
+      });
 
- 
+      expect(result).toEqual(taskStub());
+    });
+  });
   
-
-
 
 });

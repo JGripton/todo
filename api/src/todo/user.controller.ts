@@ -15,7 +15,7 @@ export class UserController {
     }
 
     @Get(':userID') 
-    getTasksByUserID(@Param('userID')user_id: string){
+    getAllUsers(@Param('userID')user_id: string){ //Takes auth0 ID of an admin as input and returns all users
         let users = this.userService.findAllUsers(user_id)
         return users;
     }

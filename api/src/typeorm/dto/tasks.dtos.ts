@@ -30,6 +30,8 @@ export class CreateTaskDto {
     @IsNotEmpty()
     @MinLength(8)
     auth0_id: string;
+
+    is_completed: boolean;
   }
 
   export class DeleteTaskDto {

@@ -28,19 +28,21 @@ export class UserService {
         if ((await isAdmin).is_admin == true){
           return this.userRepository.find();
         }
-        else return "Only admin can call this function"
+        else return;
     }
 
-      async updateTranslationStatus(updateTranslationStatusDto: UpdateUserTranslationStatusDto){
-        const updateUser = await this.userRepository
-          .createQueryBuilder("user")
-          .where("user.auth0_id = :auth0_id", {auth0_id: updateTranslationStatusDto.auth0_id})
-         .getOneOrFail() 
-  
-        if (updateUser){ 
-          return this.userRepository.update(updateUser.id, updateTranslationStatusDto);
-        }
+    async updateTranslationStatus(updateTranslationStatusDto: UpdateUserTranslationStatusDto): Promise<User> {
+      const user = await this.userRepository
+        .createQueryBuilder('user')
+        .where('user.auth0_id = :auth0_id', { auth0_id: updateTranslationStatusDto.auth0_id })
+        .getOneOrFail();
+    
+      if (user) { //Checks that user was found
+        const updatedUser = await this.userRepository.update(user.id, updateTranslationStatusDto);
+        return { ...user, ...updateTranslationStatusDto } as User;
       }
+    }
+    
 
       findUserByAuth0(id: string){
         return this.userRepository.findOne({where: {id: parseInt(id, 10)}});

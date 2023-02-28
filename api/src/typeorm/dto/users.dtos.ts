@@ -1,7 +1,7 @@
 import { IsNotEmpty, MinLength } from "class-validator";
 import {Column, Index } from 'typeorm'
 
-@Index(['auth0_id'], { unique: true }) // Here
+
 export class CreateUserDto {
     @IsNotEmpty()
     @MinLength(8)

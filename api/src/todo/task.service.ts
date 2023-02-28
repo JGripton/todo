@@ -29,6 +29,9 @@ export class TaskService {
        
         return this.taskRepository.find({where: {auth0_id: auth0_id}});
     }
+    async findTaskByID(id: number){
+      return this.taskRepository.find({where: {id: id}});
+  }
 
     async updateTask(updateTaskDto: UpdateTaskDto, id: number, auth0_id: string){
       const updateTask = await this.taskRepository
@@ -41,16 +44,22 @@ export class TaskService {
       }
     }
 
-    async updateTaskStatus(updateTaskStatusDto: UpdateTaskStatusDto, id: number, auth0_id: string){
-      const updateTask = await this.taskRepository
-        .createQueryBuilder("task")
-        .where("task.id = :id AND task.auth0_id = :auth0_id", { id: id, auth0_id: auth0_id })
-       .getOneOrFail() //looks for task matching the ID and auth0_id in the json | throws entity not found error if not found
-
-      if (updateTask){ //checks if a matching task was found
-        return this.taskRepository.update(id, updateTaskStatusDto);
+    async updateTaskStatus(updateTaskStatusDto: UpdateTaskStatusDto, id: number, auth0_id: string): Promise<Task> {
+      const task = await this.taskRepository
+        .createQueryBuilder('task')
+        .where('task.id = :id AND task.auth0_id = :auth0_id', { id: id, auth0_id: auth0_id })
+        .getOneOrFail();
+      
+    
+      if (task) {
+        task.is_completed = updateTaskStatusDto.is_completed;
+        await this.taskRepository.save(task);
+        return task;
       }
     }
+    
+    
+    
 
     async deleteTask(deleteTaskDto: DeleteTaskDto, id: number, auth0_id: string){
       const deleteTask = await this.taskRepository
