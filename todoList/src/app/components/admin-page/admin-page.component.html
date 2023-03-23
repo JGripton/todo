@@ -1,63 +1,155 @@
-<div>
-  <table mat-table class="mat-elevation-z8 demo-table">
-    <!-- Nickname Column -->
-    <ng-container matColumnDef="Nickname">
-      <th mat-header-cell *matHeaderCellDef>Nickname</th>
-      <td mat-cell>
-        <mat-list #tasks>
-          <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index" >
-              <label (click)="getTasks(i)">{{nickname}}</label>
-          </mat-list-item>
-        </mat-list></td>
-    </ng-container>
-    <!-- Has Translated Column -->
-    <ng-container matColumnDef="Has Translate?">
-      <th mat-header-cell *matHeaderCellDef>Is completed?</th>
-      <td mat-cell>
-        <mat-list #tasks2>
-          <mat-list-item *ngFor="let status of userTranslationStatusList; let i=index" >
-            Has Translated?<mat-checkbox name="translated" [ngModel]=status  class="form-check-input" ></mat-checkbox>
-        </mat-list-item>
-        </mat-list>
-      </td>  
-    </ng-container>
-    <!-- View users tasks Column -->
-    <ng-container matColumnDef="Load tasks">
-      <th mat-header-cell *matHeaderCellDef>Nickname</th>
-      <td mat-cell>
-        <mat-list #tasks>
-          <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index" >
-              <button mat-fab extended color="primary" (click)="getTasks(i)">
-                <mat-icon>menu</mat-icon>
-                View Tasks
-              </button>
-          </mat-list-item>
-        </mat-list></td>
-    </ng-container>
-  </table>
-</div>
-<div>
-    <table mat-table class="mat-elevation-z8 demo-table">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Page</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+    }
+
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .mat-row:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .mat-row:nth-child(odd) {
+      background-color: #e9ecef;
+    }
+
+    .nickname {
+      cursor: pointer;
+      color: #007bff;
+      text-decoration: underline;
+    }
+
+    .nickname:hover {
+      text-decoration: none;
+    }
+
+    button.view-tasks {
+      border: none;
+      background-color: #007bff;
+      color: #fff;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+
+    button.view-tasks:hover {
+      background-color: #0056b3;
+    }
+
+    .mat-icon {
+      margin-right: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Admin Page</h2>
+    <div>
+      <table mat-table class="mat-elevation-z8 demo-table">
+        <!-- Nickname Column -->
+        <ng-container matColumnDef="Nickname">
+          <th mat-header-cell *matHeaderCellDef>Nickname</th>
+          <td mat-cell>
+            <mat-list #tasks>
+              <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index">
+                <label class="nickname" (click)="getTasks(i)">{{nickname}}</label>
+              </mat-list-item>
+            </mat-list>
+          </td>
+        </ng-container>
+        <!-- Has Translated Column -->
+        <ng-container matColumnDef="Has Translate?">
+          <th mat-header-cell *matHeaderCellDef>Has Translated?</th>
+          <td mat-cell>
+            <mat-list #tasks2>
+              <mat-list-item *ngFor="let status of userTranslationStatusList; let i=index">
+                <mat-checkbox name="translated" [ngModel]=status class="form-check-input"></mat-checkbox>
+              </mat-list-item>
+            </mat-list>
+          </td>
+        </ng-container>
+        <!-- View users tasks Column -->
+        <ng-container matColumnDef="Load tasks">
+          <th mat-header-cell *matHeaderCellDef>Load tasks</th>
+          <td mat-cell>
+            <mat-list #tasks>
+              <mat-list-item *ngFor="let nickname of userNicknameList ; let i=index">
+                <button class="view-tasks" (click)="getTasks(i)">
+                  <mat-icon>menu</mat-icon>
+                  View Tasks
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </td>
+        </ng-container>
+      </table>
+    </div>
+    <div>
+      <table mat-table class="mat-elevation-z8 demo-table">
         <!-- Description Column -->
         <ng-container matColumnDef="Description">
           <th mat-header-cell *matHeaderCellDef>Description</th>
           <td mat-cell>
             <mat-list #tasks>
-              <mat-list-item *ngFor="let description of taskDescription" >
-                  {{description}}
+              <mat-list-item *ngFor="let description of taskDescription">
+                {{description}}
               </mat-list-item>
-            </mat-list></td>
+            </mat-list>
+          </td>
         </ng-container>
         <!-- Is Completed Column -->
         <ng-container matColumnDef="Is Completed?">
           <th mat-header-cell *matHeaderCellDef>Is completed?</th>
           <td mat-cell>
             <mat-list #tasks2>
-              <mat-list-item *ngFor="let status of taskCompleted; let i=index" >
-                  Completed?<mat-checkbox name="completed" [ngModel]=status  class="form-check-input" ></mat-checkbox>
-            </mat-list-item>
+              <mat-list-item *ngFor="let status of taskCompleted; let i=index">
+                Completed?<mat-checkbox name="completed" [ngModel]=status class="form-check-input"></mat-checkbox>
+              </mat-list-item>
             </mat-list>
-          </td>  
+          </td>
         </ng-container>
       </table>
-</div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,24 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Management</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+    }
 
-<div class="container" *ngIf="auth.isAuthenticated$ | async">
-  <div class="form-area">
-    <h3>Add new task</h3>
-    <form #tasksForm="ngForm" (ngSubmit)="createTask(tasksForm.value)" >
-      <input type="text" name="description"  ngModel>
-      <input type="submit" value ="Add task">
-      
-    </form>
-      <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
-        <mat-button-toggle value="en" (click)="onlanguageChange('en')">English</mat-button-toggle>
-        <mat-button-toggle value="es" (click)="onlanguageChange('es')">Spanish</mat-button-toggle>
-        <mat-button-toggle value="ru" (click)="onlanguageChange('ru')">Russian</mat-button-toggle>
-      </mat-button-toggle-group>
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
 
+    .form-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #ffffff;
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
 
+    h3 {
+      margin-bottom: 1rem;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      padding: 0.5rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-bottom: 1rem;
+    }
+
+    input[type="submit"] {
+      cursor: pointer;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      transition: background-color 0.2s;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+
+    .language-toggle {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .language-toggle button {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+      font-weight: bold;
+    }
+
+    .language-toggle button:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .load-tasks-btn {
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.2s;
+      margin-bottom: 2rem;
+    }
+
+    .load-tasks-btn:hover {
+      background-color: #218838;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    th, td {
+      padding: 1rem;
+      border: 1px solid #ccc;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    .mat-row:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .mat-row:nth-child(odd) {
+      background-color: #e9ecef;
+    }
+
+    button.delete-btn {
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+    }
+
+    button.delete-btn:hover {
+      background-color: rgba(0, 0, 0, 0.05);
+}
+.mat-icon {
+  color: #dc3545;
+  font-size: 1.2rem;
+}
+</style>
+</head>
+<body>
+  <div class="container" *ngIf="!(auth.isAuthenticated$ | async)">
+    <div class="form-area">
+      <h3>You must be signed in to use the application</h3>
+      <app-login-button></app-login-button>
+    </div>
   </div>
- 
-
-</div>
-<button (click)="getTasks()">Load tasks</button>
+  
+  <div class="container" *ngIf="auth.isAuthenticated$ | async">
+    <div class="form-area">
+      <h3>Add new task</h3>
+      <form #tasksForm="ngForm" (ngSubmit)="createTask(tasksForm.value)">
+        <input type="text" name="description" ngModel placeholder="Task description">
+        <input type="submit" value="Add task">
+      </form>
+      <div class="language-toggle">
+        <button (click)="onlanguageChange('en')">English</button>
+        <button (click)="onlanguageChange('es')">Spanish</button>
+        <button (click)="onlanguageChange('ru')">Russian</button>
+      </div>
+    </div>
+    <button class="load-tasks-btn" (click)="getTasks()">Load tasks</button>
 
 <table mat-table class="mat-elevation-z8 demo-table">
   <tr mat-header-row>
@@ -31,8 +169,8 @@
     <th mat-header-cell *matHeaderCellDef>Description</th>
     <td mat-cell class="border-right">
       <mat-list #tasks>
-        <mat-list-item *ngFor="let description of taskList" >
-            {{description}}
+        <mat-list-item *ngFor="let description of taskList">
+          {{description}}
         </mat-list-item>
       </mat-list>
     </td>
@@ -42,8 +180,8 @@
     <th mat-header-cell *matHeaderCellDef>Is completed?</th>
     <td mat-cell class="border-right">
       <mat-list #tasks2>
-        <mat-list-item *ngFor="let status of taskCompleted; let i=index" >
-            <mat-checkbox name="completed" [ngModel]=status  class="form-check-input" (change)="updateStatus(status, i)"></mat-checkbox>
+        <mat-list-item *ngFor="let status of taskCompleted; let i=index">
+          <mat-checkbox name="completed" [ngModel]=status class="form-check-input" (change)="updateStatus(status, i)"></mat-checkbox>
         </mat-list-item>
       </mat-list>
     </td>
@@ -53,33 +191,14 @@
     <th mat-header-cell *matHeaderCellDef>Delete</th>
     <td mat-cell>
       <mat-list #tasks2>
-        <mat-list-item *ngFor="let id of taskIDs" >
-          <button (click)="deleteThenUpdate(id)"><mat-icon>delete</mat-icon></button>
+        <mat-list-item *ngFor="let id of taskIDs">
+          <button class="delete-btn" (click)="deleteThenUpdate(id)"><mat-icon>delete</mat-icon></button>
         </mat-list-item>
       </mat-list>
-    </td>  
+    </td>
   </ng-container>
   <tr mat-row *matRowDef="let task; columns: ['Description', 'Completed', 'Delete']" class="row-color" [class.grey-background]="task.id % 2 == 0"></tr>
 </table>
-
-<style>
-  td.border-right {
-    border-right: 1px solid #ccc;
-  }
-  .mat-row:nth-child(even) {
-    background-color: #f2f2f2;
-  }
-
-  .mat-row:nth-child(odd) {
-    background-color: #616060;
-  }
-  .mat-header-cell {
-  text-align: left;
-  }
-</style>
-
-
-
-
-
-
+</div>
+</body>
+</html>

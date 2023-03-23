@@ -90,6 +90,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     },
     ),
     RouterModule.forRoot([
+      {path: '', component: TaskComponent},
+    ]),
+    RouterModule.forRoot([
       {path: 'task', component: TaskComponent},
     ]),
     RouterModule.forRoot([

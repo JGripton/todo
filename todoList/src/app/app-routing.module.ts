@@ -4,19 +4,20 @@ import { AuthGuard } from '@auth0/auth0-angular';
 import { AdminPageComponent } from './components/admin-page/admin-page.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { TaskComponent } from './task/task.component';
+
 /*
   App routing module sets which component to load from each route
 */
 const routes: Routes = [
-  { path: '/task', component: TaskComponent },
-  { path: '**', redirectTo: '/', pathMatch: 'full' },
+  { path: '', component: TaskComponent },
+  { path: 'task', component: TaskComponent },
   {
-    path: '/profile',
+    path: 'profile',
     component: ProfileComponent,
     canActivate: [AuthGuard],
   },
   {
-    path: '/admin',
+    path: 'admin',
     component: AdminPageComponent,
     canActivate: [AuthGuard],
   },
