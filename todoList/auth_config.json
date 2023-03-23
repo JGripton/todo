@@ -1,6 +1,6 @@
 {
-  "domain": "dev-hrvjkf4e5d0e5cy8.us.auth0.com",
-  "clientId": "oq4FEFctXYPhffhGh4VbMD7qif0DuptN",
+  "domain": "",
+  "clientId": "",
   "audience": "https://express.sample",
   "serverUrl": "http://localhost:4200"
 }
