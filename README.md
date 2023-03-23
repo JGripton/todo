@@ -2,7 +2,7 @@
  Simple To-Do list application with auth and language translation
  
  # Auth0 Config
- Sign up at https:auth0.com
+ Sign up at https://auth0.com/
  Create a new single web page application:
  ![image](https://user-images.githubusercontent.com/102507947/227118237-c7085e87-9b20-40b0-b9cb-2eda7bcb7308.png)
  Select Angular then navigate to the settings page:
