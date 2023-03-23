@@ -1,5 +1,9 @@
 # todo
- Simple To-Do list application with auth and language translation
+ Simple To-Do list application with auth and language translation.
+ 
+ Users sign in with Auth0 and can add tasks to a list. The task can be marked as completed and can be deleted. Additionally, users can translate their task list into another language using Google Translate API.
+ 
+ Admins can see a list of all users, whether or not they have used the translation button along with a list of the users' tasks.
  
  # Auth0 Config
  Sign up at https://auth0.com/
