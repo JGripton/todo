@@ -1,6 +1,23 @@
 # todo
  Simple To-Do list application with auth and language translation
  
+ # Auth0 Config
+ Sign up at https:auth0.com
+ Create a new single web page application:
+ ![image](https://user-images.githubusercontent.com/102507947/227118237-c7085e87-9b20-40b0-b9cb-2eda7bcb7308.png)
+ Select Angular then navigate to the settings page:
+ ![image](https://user-images.githubusercontent.com/102507947/227118841-c9608e80-6568-494d-bd6b-f62243c0fb7d.png)
+ Add your application's address to the Application URIs
+ ![image](https://user-images.githubusercontent.com/102507947/227118537-7c7eab15-cbcd-45c5-adee-c143d719a4a1.png)
+ Your domain and clientId can be found at the top of the Settings page under Basic Information.
+ Add them to the auth_config.json file:
+ ```{
+  "domain": "",
+  "clientId": "",
+  "audience": "https://express.sample",
+  "serverUrl": "http://localhost:4200"
+}
+```
  
  # Running backend
  First, configure backend .env to connect to your database. Then add your AUTH0_AUDIENCE and AUTH0_DOMAIN to the .env.
