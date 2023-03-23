@@ -1,14 +1,9 @@
 # todo
  Simple To-Do list application with auth and language translation
  
- Currently running on google cloud at https://todo-front-v2.uc.r.appspot.com
- 
- Home page is currently empty. Use the menu to sign in and then open the task page
- 
- Backend not currently live
  
  # Running backend
- First, configure .env to connect to your database, then cd into api foder
+ First, configure backend .env to connect to your database. Then add your AUTH0_AUDIENCE and AUTH0_DOMAIN to the .env.
  
  ```cd api```
  
@@ -37,8 +32,6 @@ Open todoList folder
    ``` npm run start ```
    
    Frontend should now be running at http://localhost:4200/
-   
-   
    
    
    # Creating a database on Google Cloud
@@ -108,5 +101,10 @@ Open todoList folder
    
    The frontend will now be accessible at the URL in your console
 
+# Screenshots
+Task page signed in:
+![image](https://user-images.githubusercontent.com/102507947/227115952-33536d61-fbdf-467d-9c31-3643ec924a69.png)
 
+Task page signed out:
+![image](https://user-images.githubusercontent.com/102507947/227116309-e1ae3ca6-def0-4e24-9600-a4a745a318d7.png)
 
